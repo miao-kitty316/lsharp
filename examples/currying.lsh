@@ -1,0 +1,15 @@
+-- currying.lsh：函数是一等公民，缺参数就是部分应用
+
+let add a b = a + b
+let add3 a b c = a + b + c
+let inc = add 1
+
+print (add3 1 2 3)                  -- 6
+print (inc 41)                      -- 42
+print (map (add 10) [1, 2, 3])      -- [11, 12, 13]
+print (foldl add 0 (range 1 101))   -- 5050
+
+-- 函数组合：compose 来自标准库
+let double = \x -> x * 2
+let successor = \x -> x + 1
+print (compose double successor 5)  -- 12

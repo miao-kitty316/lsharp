@@ -1,0 +1,35 @@
+-- algebraic-data.lsh：代数数据类型 + 模式匹配
+
+data Maybe a = None | Some a
+data Tree a = Leaf | Node (Tree a) a (Tree a)
+
+let fromMaybe d m = match m with
+  | None -> d
+  | Some x -> x
+
+let mapMaybe f m = match m with
+  | None -> None
+  | Some x -> Some (f x)
+
+-- 往二叉搜索树里插入一个值（返回一棵新树，原树不变）
+let insert tree x = match tree with
+  | Leaf -> Node Leaf x Leaf
+  | Node l v r ->
+      if x < v then Node (insert l x) v r
+      else if x > v then Node l v (insert r x)
+      else Node l v r
+
+let toList t = match t with
+  | Leaf -> []
+  | Node l v r -> toList l + (v :: toList r)
+
+let size t = match t with
+  | Leaf -> 0
+  | Node l _ r -> 1 + size l + size r
+
+let tree = insert (insert (insert Leaf 5) 3) 8
+
+print (fromMaybe 0 (Some 42))                    -- 42
+print (mapMaybe (\x -> x * 2) (Some 7))          -- Some(14)
+print (toList tree)                              -- [3, 5, 8]
+print (size tree)                                -- 3

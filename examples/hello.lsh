@@ -1,0 +1,4 @@
+-- hello.lsh：最小的 L# 程序
+-- 运行：cargo run -- examples/hello.lsh
+
+print "你好，L#！"

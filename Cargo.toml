@@ -1,0 +1,19 @@
+[package]
+name = "lsharp"
+version = "0.1.0"
+edition = "2021"
+description = "L# — a tiny pure functional language with a Rust interpreter"
+license = "MIT"
+readme = "README.md"
+keywords = ["functional", "interpreter", "language"]
+categories = ["compilers"]
+
+[lib]
+name = "lsharp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lsharp"
+path = "src/main.rs"
+
+[dependencies]

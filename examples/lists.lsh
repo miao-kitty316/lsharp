@@ -1,0 +1,17 @@
+-- lists.lsh：列表、高阶函数与快排
+
+let quicksort xs = match xs with
+  | [] -> []
+  | pivot :: rest ->
+      quicksort (filter (\x -> x < pivot) rest)
+        + (pivot :: quicksort (filter (\x -> x >= pivot) rest))
+
+let squares = map (\x -> x * x) (range 1 6)     -- [1, 4, 9, 16, 25]
+let total = foldl (\acc x -> acc + x) 0 squares -- 55
+
+print (quicksort [5, 3, 8, 1, 9, 2, 7, 4, 6, 0])
+print squares
+print total
+print (take 3 (drop 2 squares))                 -- [9, 16, 25]
+print (zipWith (\a b -> a + b) [1, 2, 3] [10, 20, 30])
+print (elem 16 squares)                         -- true
