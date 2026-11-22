@@ -1,0 +1,40 @@
+//! L# 标准库（prelude）
+-- 用 L# 自己写的一层便利函数。顶层带参数的绑定互相可见，
+-- 所以下面的函数可以互相调用，也可以自由递归。
+
+let id x = x
+let const x _ = x
+let flip f x y = f y x
+let compose f g x = f (g x)
+let not b = if b then false else true
+let negate n = -n
+
+let sum xs = foldl (\acc x -> acc + x) 0 xs
+let product xs = foldl (\acc x -> acc * x) 1 xs
+let length xs = foldl (\acc _ -> acc + 1) 0 xs
+let any p xs = foldl (\acc x -> acc || p x) false xs
+let all p xs = foldl (\acc x -> acc && p x) true xs
+let count p xs = foldl (\acc x -> if p x then acc + 1 else acc) 0 xs
+let concat xss = foldl (\acc ys -> acc + ys) [] xss
+
+let take n xs =
+  if n <= 0 then []
+  else match xs with
+    | [] -> []
+    | x :: rest -> x :: take (n - 1) rest
+
+let drop n xs =
+  if n <= 0 then xs
+  else match xs with
+    | [] -> []
+    | _ :: rest -> drop (n - 1) rest
+
+let elem x xs = any (\y -> x == y) xs
+
+let zipWith f xs ys =
+  match xs with
+    | [] -> []
+    | a :: as_ ->
+        match ys with
+          | [] -> []
+          | b :: bs -> f a b :: zipWith f as_ bs
